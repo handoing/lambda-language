@@ -1,0 +1,5 @@
+.DS_Store
+.metadata
+.idea/
+*.iml
+test.js
