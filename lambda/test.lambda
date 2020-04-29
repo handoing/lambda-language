@@ -1,5 +1,2 @@
-# sum = lambda(x, y) x + y;
-# println(sum(2, 3));
-
-fib = λ (n) if n < 2 then n else fib(n - 1) + fib(n - 2);
-fib(10);
+sum = lambda(x, y) x + y;
+print(sum(2, 3));
