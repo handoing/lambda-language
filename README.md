@@ -1,4 +1,4 @@
-# lambda-anguage
+# lambda-language
 Implementing a learning only programming language. (http://lisperator.net/pltut/)
 
 ## Getting Started
