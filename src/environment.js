@@ -15,15 +15,15 @@ class Environment {
   }
   get(name) {
     if (name in this.vars) return this.vars[name];
-    throw new Error("Undefined variable " + name);
+    throw new Error('Undefined variable ' + name);
   }
   set(name, value) {
     var scope = this.lookup(name);
-    if (!scope && this.parent) throw new Error("Undefined variable " + name);
-    return (scope || this).vars[name] = value;
+    if (!scope && this.parent) throw new Error('Undefined variable ' + name);
+    return ((scope || this).vars[name] = value);
   }
   def(name, value) {
-    return this.vars[name] = value;
+    return (this.vars[name] = value);
   }
 }
 

@@ -1,0 +1,27 @@
+{
+  "name": "lambda-language",
+  "version": "1.0.0",
+  "description": "Implementing a learning only programming language. (http://lisperator.net/pltut/)",
+  "main": "",
+  "scripts": {
+    "lint:js:fix": "eslint --fix --ext .js src/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/handoing/lambda-language.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/handoing/lambda-language/issues"
+  },
+  "homepage": "https://github.com/handoing/lambda-language#readme",
+  "devDependencies": {
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2"
+  }
+}

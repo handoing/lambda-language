@@ -19,7 +19,7 @@ class InputStream {
     return this.input.charAt(this.pos);
   }
   eof() {
-    return this.peek() == "";
+    return this.peek() == '';
   }
   croak(msg) {
     throw new Error(`${msg} (${this.line}:${this.col})`);
