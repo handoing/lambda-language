@@ -1,2 +1,71 @@
 sum = lambda(x, y) x + y;
 print(sum(2, 3));
+
+print("---");
+
+print_range = lambda(a, b)
+if a <= b {
+  print(a);
+  if a + 1 <= b {
+    print_range(a + 1, b);
+  }
+};
+
+# print_range(1, 10);
+
+cons = lambda(a, b) lambda(f) f(a, b);
+car = lambda(cell) cell(lambda(a, b) a);
+cdr = lambda(cell) cell(lambda(a, b) b);
+NIL = lambda(f) f(NIL, NIL);
+
+x = cons(1, cons(2, cons(3, cons(4, cons(5, cons(6, NIL))))));
+foreach = lambda(list, f)
+            if list != NIL {
+              f(car(list));
+              foreach(cdr(list), f);
+            };
+foreach(x, print);
+
+print("---");
+
+print(
+  let loop (n = 100)
+    if n > 0 then n + loop(n - 1) else 0
+);
+
+print("---");
+
+let (x = 2, y = x + 1, z = x + y) print(x + y + z);
+
+print("---");
+
+let (x = 10) {
+  let (x = x * 2, y = x * x) {
+    print(x);
+    print(y);
+  };
+  print(x);
+};
+
+print("---");
+
+fib = λ(n) if n < 2 then n else fib(n - 1) + fib(n - 2);
+
+print("fib(10): ");
+time( λ() print(fib(10)) );
+print("fibJS(10): ");
+time( λ() print(fibJS(10)) );
+
+print("---");
+
+print("fib(20): ");
+time( λ() print(fib(20)) );
+print("fibJS(20): ");
+time( λ() print(fibJS(20)) );
+
+print("---");
+
+print("fib(30): ");
+time( λ() print(fib(30)) );
+print("fibJS(30): ");
+time( λ() print(fibJS(30)) );

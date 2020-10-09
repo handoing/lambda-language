@@ -1,4 +1,4 @@
-const keywords = " if then else lambda λ true false ";
+const keywords = " let if then else lambda λ true false ";
 
 function is_keyword(x) {
   return keywords.indexOf(" " + x + " ") >= 0;

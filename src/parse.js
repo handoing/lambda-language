@@ -81,6 +81,36 @@ class Parse {
     if (name.type != "var") this.input.croak("Expecting variable name");
     return name.value;
   }
+  parse_vardef() {
+    let name = this.parse_varname(), def;
+    if (this.is_op("=")) {
+        this.input.next();
+        def = this.parse_expression();
+    }
+    return { name: name, def: def };
+  }
+  parse_let() {
+    this.skip_kw("let");
+    if (this.input.peek().type == "var") {
+        const name = this.input.next().value;
+        const defs = this.delimited("(", ")", ",", this.parse_vardef);
+        return {
+            type: "call",
+            func: {
+                type: "lambda",
+                name: name,
+                vars: defs.map(function(def) { return def.name }),
+                body: this.parse_expression(),
+            },
+            args: defs.map(function(def){ return def.def || FALSE })
+        };
+    }
+    return {
+        type: "let",
+        vars: this.delimited("(", ")", ",", this.parse_vardef),
+        body: this.parse_expression(),
+    };
+  }
   parse_if() {
     this.skip_kw("if");
     let cond = this.parse_expression();
@@ -100,6 +130,7 @@ class Parse {
   parse_lambda() {
     return {
         type: "lambda",
+        name: this.input.peek().type == "var" ? this.input.next().value : null,
         vars: this.delimited("(", ")", ",", this.parse_varname),
         body: this.parse_expression()
     };
@@ -123,6 +154,7 @@ class Parse {
             return exp;
         }
         if (this.is_punc("{")) return this.parse_prog();
+        if (this.is_kw("let")) return this.parse_let();
         if (this.is_kw("if")) return this.parse_if();
         if (this.is_kw("true") || this.is_kw("false")) return this.parse_bool();
         if (this.is_kw("lambda") || this.is_kw("λ")) {

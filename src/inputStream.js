@@ -22,7 +22,7 @@ class InputStream {
     return this.peek() == "";
   }
   croak(msg) {
-    throw new Error(`${msg} (${line}:${col})`);
+    throw new Error(`${msg} (${this.line}:${this.col})`);
   }
 }
 
