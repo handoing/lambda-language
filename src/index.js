@@ -3,7 +3,7 @@ const InputStream = require('./inputStream.js');
 const TokenStream = require('./tokenStream.js');
 const Parse = require('./parse.js');
 const Environment = require('./environment.js');
-const { evaluate } = require('./evaluate.js');
+const { evaluate, Execute } = require('./evaluate.js');
 
 const args = process.argv.splice(2);
 const entryFilePath = args[0];
@@ -18,24 +18,42 @@ console.log(JSON.stringify(ast, null, 2));
 
 const globalEnv = new Environment();
 
-globalEnv.def("print", function(val) {
+globalEnv.def("print", function(k, val) {
   console.log(val);
+  k(false);
 });
 
-globalEnv.def("fibJS", function fibJS(n){
-  if (n < 2) return n;
-  return fibJS(n - 1) + fibJS(n - 2);
+globalEnv.def("halt", function(k){});
+
+globalEnv.def("sleep", function(k, milliseconds){
+  setTimeout(function(){
+    Execute(k, [ false ]);
+  }, milliseconds);
 });
 
-globalEnv.def("time", function(fn){
+globalEnv.def("twice", function(k, a, b){
+  k(a);
+  k(b);
+});
+
+globalEnv.def("time", function(k, fn) {
   var t1 = Date.now();
-  var ret = fn();
-  var t2 = Date.now();
-  console.log("Time: " + (t2 - t1) + "ms");
-  return ret;
+  fn(function(ret){
+    var t2 = Date.now();
+    console.log("Time: " + (t2 - t1) + "ms");
+    k(ret);
+  });
+});
+
+globalEnv.def("CallCC", function(k, f){
+  f(k, function CC(discarded, ret){
+      k(ret);
+  });
 });
 
 console.log('输出:');
-evaluate(ast, globalEnv);
+Execute(evaluate, [ ast, globalEnv, function(result){
+  console.log("*** Result:", result);
+}]);
 
 

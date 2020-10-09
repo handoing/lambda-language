@@ -49,23 +49,34 @@ let (x = 10) {
 
 print("---");
 
-fib = λ(n) if n < 2 then n else fib(n - 1) + fib(n - 2);
+sum = lambda(n, ret)
+        if n == 0 then ret
+                  else sum(n - 1, ret + n);
 
-print("fib(10): ");
-time( λ() print(fib(10)) );
-print("fibJS(10): ");
-time( λ() print(fibJS(10)) );
-
-print("---");
-
-print("fib(20): ");
-time( λ() print(fib(20)) );
-print("fibJS(20): ");
-time( λ() print(fibJS(20)) );
+time( lambda() print(sum(50000, 0)) );
 
 print("---");
 
-print("fib(30): ");
-time( λ() print(fib(30)) );
-print("fibJS(30): ");
-time( λ() print(fibJS(30)) );
+let loop (n = 0) {
+  if n < 10 {
+    print(n);
+    sleep(250);
+    loop(n + 1);
+  }
+};
+
+# print("---");
+
+# print(2 + twice(3, 4));
+
+print("---");
+
+with-return = λ(f) λ() CallCC(f);
+
+foo = with-return(λ(return){
+  print("foo");
+  return("DONE");
+  print("bar");
+});
+
+foo();
